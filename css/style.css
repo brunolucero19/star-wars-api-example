@@ -4,20 +4,25 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color:bisque;
+    background-image: url(../img/star-wars-logo-3654.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; 
+    background-attachment: fixed; 
     padding: 30px;
 }
 
 h1{
     font-weight: bold;
     margin-bottom: 50px;
+    color: #fff;
 }
 
 
 .search-container{
     display: flex;
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid #fff;
     border-radius: 5px;
     padding: 0px 10px;
     margin-bottom: 30px;
@@ -29,16 +34,18 @@ h1{
     outline: none;
     font-size: 1rem;
     padding: 5px;
-    background-color: bisque;
+    background-color: #000;
+    color: #fff;
     width: 70%;
 }
 
 .search-container > input::placeholder{
     font-size: 1rem;
+    color: #fff;
 }
 
 .search_icon{
-    color: #000;
+    color: #fff;
     font-size: 1rem;
 }
 
@@ -54,4 +61,6 @@ h1{
     font-weight: bold;
     margin-top: 20px;
     text-align: center;
+    color: #fff;
+    background-color: #000;
 }
