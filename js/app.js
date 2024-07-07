@@ -84,33 +84,6 @@ document.addEventListener('DOMContentLoaded',() =>{
         filmsbutton.disabled = false
     })
 
-    /*
-    async function obtenerYMostrarDatos(endpoint, createCard) {
-        try {
-            containercard.innerHTML=''
-            await obtenerYMostrar(endpoint, createCard);
-        } catch (error) {
-            console.log('Error al obtener los datos', error);
-        }
-    }
-
-    async function obtenerYMostrar(url, createCard) {
-        const response = await fetch(url);
-        const data = await response.json();
-        createCards(data.results, createCard);
-        if (data.next) {
-            await obtenerYMostrar(data.next, createCard);
-        }
-    }
-
-    function createCards(items, createCard) {
-        for (let item of items) {
-            createCard(item);
-        }
-    }
-        */
-    
-    
     async function obtenerPersonajes(url=endpointPersonajes){
         try{
             const response = await fetch(url)
@@ -188,7 +161,7 @@ document.addEventListener('DOMContentLoaded',() =>{
     function createStarshipCard (nave) {
         const {name,model,cost_in_credits,manufacturer,passengers} = nave
             containercard.innerHTML+= `
-            <div class="card">
+            <div class="card starshipCard">
                 <div class="card-body" >
                     <h5 class="card-title">${name}</h5>
                     <p class="card-text">Modelo: ${model}</p>
