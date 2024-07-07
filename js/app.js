@@ -44,28 +44,73 @@ document.addEventListener('DOMContentLoaded',() =>{
         
     }
 
+    const endpointPersonajes = "https://swapi.dev/api/people/"
+    const endpointNaves = "https://swapi.dev/api/starships/"
+    const endpointPeliculas = "https://swapi.dev/api/films/"
+
     charactersbutton.addEventListener('click', async () => {
         searchBar.value = ''
         containercard.innerHTML = ''
-        await obtenerPersonajes()
+        charactersbutton.disabled = true
+        starshipsbutton.disabled = true
+        filmsbutton.disabled = true
+        await obtenerPersonajes(endpointPersonajes)
+        charactersbutton.disabled = false
+        starshipsbutton.disabled = false
+        filmsbutton.disabled = false
     })
 
     starshipsbutton.addEventListener('click', async () => {
         searchBar.value = ''
         containercard.innerHTML = ''
-        await obtenerNaves()
+        charactersbutton.disabled = true
+        starshipsbutton.disabled = true
+        filmsbutton.disabled = true
+        await obtenerNaves(endpointNaves)
+        charactersbutton.disabled = false
+        starshipsbutton.disabled = false
+        filmsbutton.disabled = false
     })
 
     filmsbutton.addEventListener('click', async () => {
         searchBar.value = ''
         containercard.innerHTML = ''
-        await obtenerPeliculas()
+        charactersbutton.disabled = true
+        starshipsbutton.disabled = true
+        filmsbutton.disabled = true
+        await obtenerPeliculas(endpointPeliculas)
+        charactersbutton.disabled = false
+        starshipsbutton.disabled = false
+        filmsbutton.disabled = false
     })
 
-    const endpointPersonajes = "https://swapi.dev/api/people/"
-    const endpointNaves = "https://swapi.dev/api/starships/"
-    const endpointPeliculas = "https://swapi.dev/api/films/"
+    /*
+    async function obtenerYMostrarDatos(endpoint, createCard) {
+        try {
+            containercard.innerHTML=''
+            await obtenerYMostrar(endpoint, createCard);
+        } catch (error) {
+            console.log('Error al obtener los datos', error);
+        }
+    }
 
+    async function obtenerYMostrar(url, createCard) {
+        const response = await fetch(url);
+        const data = await response.json();
+        createCards(data.results, createCard);
+        if (data.next) {
+            await obtenerYMostrar(data.next, createCard);
+        }
+    }
+
+    function createCards(items, createCard) {
+        for (let item of items) {
+            createCard(item);
+        }
+    }
+        */
+    
+    
     async function obtenerPersonajes(url=endpointPersonajes){
         try{
             const response = await fetch(url)
@@ -85,10 +130,6 @@ document.addEventListener('DOMContentLoaded',() =>{
         }
     }
 
-
-    
-
-
     async function obtenerNaves(url=endpointNaves){
         try{
             const response = await fetch(url)
@@ -107,11 +148,6 @@ document.addEventListener('DOMContentLoaded',() =>{
             createStarshipCard(nave);
         }
     }
-
-    
-
-    
-
 
     async function obtenerPeliculas(url=endpointPeliculas){
         try{
