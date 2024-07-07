@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded',() =>{
             noHayResultados()
         } else{
             for (const resultado of resultados) {
-                let card
                 if (resultado.categoria === 'people'){
                     createCharacterCard(resultado)           
                 } else if (resultado.categoria === 'starships'){
@@ -45,90 +44,91 @@ document.addEventListener('DOMContentLoaded',() =>{
         
     }
 
-    charactersbutton.addEventListener('click', () => {
-        searchBar.value = ''; 
-        containercard.innerHTML = ''; 
-        obtenerPersonajes();
+    charactersbutton.addEventListener('click', async () => {
+        searchBar.value = ''
+        containercard.innerHTML = ''
+        await obtenerPersonajes()
+    })
+
+    starshipsbutton.addEventListener('click', async () => {
+        searchBar.value = ''
+        containercard.innerHTML = ''
+        await obtenerNaves()
+    })
+
+    filmsbutton.addEventListener('click', async () => {
+        searchBar.value = ''
+        containercard.innerHTML = ''
+        await obtenerPeliculas()
     })
 
     const endpointPersonajes = "https://swapi.dev/api/people/"
-
+    const endpointNaves = "https://swapi.dev/api/starships/"
+    const endpointPeliculas = "https://swapi.dev/api/films/"
 
     async function obtenerPersonajes(url=endpointPersonajes){
-    try{
-        let response = await fetch(url)
-        .then(response=>response.json())
-        .then(data => {
-            createCardsPersonajes(data.results);
+        try{
+            const response = await fetch(url)
+            const data = await response.json()
+            createCardsPersonajes(data.results)
             if (data.next) {
-                obtenerPersonajes(data.next);
+                await obtenerPersonajes(data.next)
             }
-        })
-    }catch(error){
-        console.log('Error al obtener los personajes')
+        }catch(error){
+            console.log('Error al obtener los personajes', error)
+        } 
     } 
-    } 
+
     function createCardsPersonajes(personajes) {
         for (let personaje of personajes) {
-            createCharacterCard(personaje);
+            createCharacterCard(personaje)
         }
     }
 
-    starshipsbutton.addEventListener('click', () => {
-        searchBar.value = ''; 
-        containercard.innerHTML = ''; 
-        obtenerNaves();
-    })
 
-    const endpointNaves = "https://swapi.dev/api/starships/"
+    
 
 
     async function obtenerNaves(url=endpointNaves){
-    try{
-        let response = await fetch(url)
-        .then(response=>response.json())
-        .then(data => {
-            createCardsNaves(data.results);
+        try{
+            const response = await fetch(url)
+            const data = await response.json()
+            createCardsNaves(data.results)
             if (data.next) {
-                obtenerNaves(data.next);
+                await obtenerNaves(data.next)
             }
-        })
-    }catch(error){
-        console.log('Error al obtener las naves espaciales.')
+        }catch(error){
+            console.log('Error al obtener las naves espaciales.', error)
+        } 
     } 
-    } 
+
     function createCardsNaves(naves) {
         for (let nave of naves) {
             createStarshipCard(nave);
         }
     }
 
-    filmsbutton.addEventListener('click', () => {
-        searchBar.value = ''; 
-        containercard.innerHTML = ''; 
-        obtenerPeliculas();
-    })
+    
 
-    const endpointPeliculas = "https://swapi.dev/api/films/"
+    
 
 
     async function obtenerPeliculas(url=endpointPeliculas){
-    try{
-        let response = await fetch(url)
-        .then(response=>response.json())
-        .then(data => {
-            createCardsPeliculas(data.results);
+        try{
+            const response = await fetch(url)
+            const data = await response.json()
+            createCardsPeliculas(data.results)
             if (data.next) {
-                obtenerPeliculas(data.next);
+                await obtenerPeliculas(data.next)
             }
-        })
-    }catch(error){
-        console.log('Error al obtener las películas.')
+        }catch(error){
+            console.log('Error al obtener las películas.', error)
+        } 
     } 
-    } 
+
     function createCardsPeliculas(peliculas) {
         for (let pelicula of peliculas) {
-            createFilmCard(pelicula);
+            createFilmCard(pelicula)
         }
     }
 
@@ -136,14 +136,14 @@ document.addEventListener('DOMContentLoaded',() =>{
     function createCharacterCard (personaje) {
         const {name,gender,height,mass,birth_year,eye_color,skin_color} = personaje
             containercard.innerHTML+= `
-            <div class="card" style="width: 18rem; margin: 10px;">
+            <div class="card">
                 <div class="card-body" >
-                    <h5 class="card-title" style="color: blue;">${name}</h5>
-                    <p class="card-text" style="margin-bottom: 10px;">Género: ${gender}</p>
-                    <p class="card-text" style="margin-bottom: 10px;">Altura: ${height} cm</p>
-                    <p class="card-text" style="margin-bottom: 10px;">Peso: ${mass} kg</p>
-                    <p class="card-text" style="margin-bottom: 10px;">Año de nacimiento: ${birth_year}</p>
-                    <p class="card-text" style="margin-bottom: 10px;">Color de ojos: ${eye_color}</p>
+                    <h5 class="card-title">${name}</h5>
+                    <p class="card-text">Género: ${gender}</p>
+                    <p class="card-text">Altura: ${height} cm</p>
+                    <p class="card-text">Peso: ${mass} kg</p>
+                    <p class="card-text">Año de nacimiento: ${birth_year}</p>
+                    <p class="card-text">Color de ojos: ${eye_color}</p>
                     <p class="card-text">Color de piel: ${skin_color}</p>
                 </div>
             </div>`
@@ -152,13 +152,13 @@ document.addEventListener('DOMContentLoaded',() =>{
     function createStarshipCard (nave) {
         const {name,model,cost_in_credits,manufacturer,passengers} = nave
             containercard.innerHTML+= `
-            <div class="card" style="width: 18rem; margin: 10px;">
+            <div class="card">
                 <div class="card-body" >
-                    <h5 class="card-title" style="color: blue;">${name}</h5>
-                    <p class="card-text" style="margin-bottom: 10px;">Modelo: ${model}</p>
-                    <p class="card-text" style="margin-bottom: 10px;">Costo en créditos: ${cost_in_credits}</p>
-                    <p class="card-text" style="margin-bottom: 10px;">Fabricante: ${manufacturer}</p>
-                    <p class="card-text" style="margin-bottom: 10px;">Cant. de pasajeros: ${passengers}</p>
+                    <h5 class="card-title">${name}</h5>
+                    <p class="card-text">Modelo: ${model}</p>
+                    <p class="card-text">Costo en créditos: ${cost_in_credits}</p>
+                    <p class="card-text">Fabricante: ${manufacturer}</p>
+                    <p class="card-text">Cant. de pasajeros: ${passengers}</p>
                 </div>
             </div>`
     }
@@ -166,13 +166,13 @@ document.addEventListener('DOMContentLoaded',() =>{
     function createFilmCard (pelicula) {
         const {title,director,producer,opening_crawl,release_date} = pelicula
             containercard.innerHTML+= `
-            <div class="card" style="width: 28rem; margin: 10px;">
+            <div class="card" style="width: 28rem">
                 <div class="card-body" >
-                    <h5 class="card-title" style="color: blue;">${title}</h5>
-                    <p class="card-text" style="margin-bottom: 10px;">Director: ${director}</p>
-                    <p class="card-text" style="margin-bottom: 10px;">Productor/es: ${producer}</p>
-                    <p class="card-text" style="margin-bottom: 10px;">Descripción: ${opening_crawl}</p>
-                    <p class="card-text" style="margin-bottom: 10px;">Fecha de lanz.: ${release_date}</p>
+                    <h5 class="card-title">${title}</h5>
+                    <p class="card-text">Director: ${director}</p>
+                    <p class="card-text">Productor/es: ${producer}</p>
+                    <p class="card-text">Descripción: ${opening_crawl}</p>
+                    <p class="card-text">Fecha de lanz.: ${release_date}</p>
                 </div>
             </div>`
     }
